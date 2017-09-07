@@ -6,21 +6,25 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 namespace DiagnostisktProv.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger _logger;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, ILogger logger)
         {
+            _logger = logger;
             _context = context;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            _logger.LogWarning("With great powers comes great responsibilities");
             return View(await _context.Products.ToListAsync());
         }
 
