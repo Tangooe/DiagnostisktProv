@@ -15,7 +15,7 @@ namespace DiagnostisktProv.Controllers
         private readonly ILogger _logger;
         private readonly ProductCategoryService _productCategoryService;
 
-        public ProductsController(ApplicationDbContext context, ILogger logger, ProductCategoryService productCategoryService)
+        public ProductsController(ApplicationDbContext context, ILogger<ProductsController> logger, ProductCategoryService productCategoryService)
         {
             _productCategoryService = productCategoryService;
             _logger = logger;
