@@ -45,7 +45,7 @@ namespace DiagnostisktProv.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
+            SetProductCategorySelectList();
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace DiagnostisktProv.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
+                SetProductCategorySelectList();
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -79,7 +79,7 @@ namespace DiagnostisktProv.Controllers
             {
                 return NotFound();
             }
-            ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
+            SetProductCategorySelectList();
             return View(product);
         }
 
@@ -113,7 +113,7 @@ namespace DiagnostisktProv.Controllers
                         throw;
                     }
                 }
-                ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
+                SetProductCategorySelectList();
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -151,6 +151,16 @@ namespace DiagnostisktProv.Controllers
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
+        }
+
+        private void SetProductCategorySelectList()
+        {
+            ViewBag.Categories = new SelectList(new List<ProductCategory>
+            {
+                new ProductCategory { Id = 1, Name = "TV" },
+                new ProductCategory { Id = 2, Name = "DVD" },
+                new ProductCategory { Id = 3, Name = "VHS" }
+            }, "Id", "Name");
         }
     }
 }
