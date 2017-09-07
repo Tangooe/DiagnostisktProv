@@ -1,9 +1,11 @@
-﻿using DiagnostisktProv.Data;
+﻿using System.Collections.Generic;
+using DiagnostisktProv.Data;
 using DiagnostisktProv.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DiagnostisktProv.Controllers
 {
@@ -43,6 +45,7 @@ namespace DiagnostisktProv.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
             return View();
         }
 
@@ -57,6 +60,7 @@ namespace DiagnostisktProv.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+                ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -75,6 +79,7 @@ namespace DiagnostisktProv.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
             return View(product);
         }
 
@@ -108,6 +113,7 @@ namespace DiagnostisktProv.Controllers
                         throw;
                     }
                 }
+                ViewBag.Categories = new SelectList(new List<ProductCategory>(), "Id", "Name");
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
