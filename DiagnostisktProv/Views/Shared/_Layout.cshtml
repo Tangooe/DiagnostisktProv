@@ -46,9 +46,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2017 - DiagnostisktProv</p>
-        </footer>
+        @await Html.PartialAsync("FooterPartial")
     </div>
 
     <environment include="Development">
