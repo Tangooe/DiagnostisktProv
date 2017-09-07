@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using DiagnostisktProv.Data;
+﻿using DiagnostisktProv.Data;
 using DiagnostisktProv.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
+using DiagnostisktProv.Services;
 
 namespace DiagnostisktProv.Controllers
 {
@@ -14,9 +13,11 @@ namespace DiagnostisktProv.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger _logger;
+        private readonly ProductCategoryService _productCategoryService;
 
-        public ProductsController(ApplicationDbContext context, ILogger logger)
+        public ProductsController(ApplicationDbContext context, ILogger logger, ProductCategoryService productCategoryService)
         {
+            _productCategoryService = productCategoryService;
             _logger = logger;
             _context = context;
         }
@@ -159,12 +160,7 @@ namespace DiagnostisktProv.Controllers
 
         private void SetProductCategorySelectList()
         {
-            ViewBag.Categories = new SelectList(new List<ProductCategory>
-            {
-                new ProductCategory { Id = 1, Name = "TV" },
-                new ProductCategory { Id = 2, Name = "DVD" },
-                new ProductCategory { Id = 3, Name = "VHS" }
-            }, "Id", "Name");
+            ViewBag.Categories = _productCategoryService.GetSelectList();
         }
     }
 }
